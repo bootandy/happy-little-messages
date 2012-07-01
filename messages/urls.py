@@ -16,7 +16,9 @@ urlpatterns = patterns('messages.views',
     # url(r'^(?P<pk>\d+)/$',  DetailView.as_view(
     #         model=Message,
     #         template_name='messages/detail.html') ),
-    url(r'^(?P<m_id>\d+)/$', 'detail'),
+    #url(r'^(?P<m_id>\d+)/$', 'detail'),
+
+    url(r'^add/', 'add'),
 
     url(r'^(?P<m_id>\d+)/vote/$', 'vote'),
 )

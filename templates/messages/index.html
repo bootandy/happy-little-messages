@@ -4,9 +4,10 @@
     <div class="row">
         <div class="span12">
             <div class='row'>
-                <form class="well form-search">
-                  <textarea type="text" class="main_message_input" rows="3"> </textarea>
-                  <button type="submit" class="btn btn-primary add_button">Add Message</button>
+                <form class="well form-search" action='add/' method='POST' id='add_form'>
+                  {% csrf_token %}
+                  <textarea type="text" name="main_message_input" id="main_message_input" class="main_message_input" rows="3"> </textarea>
+                  <button type="submit" class="btn btn-primary add_button bigger_button">Add Message</button>
                 </form>
             </div>
         </div>
@@ -14,11 +15,11 @@
 
 {% if latest_msgs %}
     <div class='row-fluid'>
-        <div class="span8">
+        <div class="span9">
             {% for m in latest_msgs %}
             	<div class='row'>
             		<div class='span8 message_row'>
-                		<h1 href="/messages/{{ m.id }}/">{{ m.text }}</h1>
+                		<h2 href="/messages/{{ m.id }}/">{{ m.text }}</h2>
         				<h4> {{m.date_added|date:"D d M Y c"}} </h4>
             		</div>
             		<div class='span2'>
@@ -27,13 +28,13 @@
             		<div class='span2'>
         				<form action="/messages/{{ m.id }}/vote/" method="post">
         					{% csrf_token %}
-        					<input type="submit" value=" +1 " class='btn btn-primary add_button' />
+        					<input type="submit" value=" +1 " class='btn btn-primary bigger_button' />
         				</form>
             		</div>
                 </div>
             {% endfor %}
         </div>
-        <div class="span4">
+        <div class="span3">
             <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
             <script float='right'>
                 new TWTR.Widget({
@@ -74,21 +75,52 @@
             console.log('going '+'tweet-id-'+count);
 
             if (twit) {
-                count++
                 import_link = document.createElement('button');
                 import_link.setAttribute('class', 'btn btn-primary  import_button');
-                import_link.setAttribute('onclick','javascript:click_tweet()')
+                import_link.setAttribute('onclick','javascript:click_tweet('+count+')')
                 newContent = document.createTextNode(" << import this tweet <<");
-                import_link.appendChild(newContent)
-                
+                import_link.appendChild(newContent)                
                 twit.appendChild(import_link);
+                count++
             }
 
             setTimeout('go()', 1000);
         }
-        function click_tweet() {
-            alert('go');
+        function click_tweet(num) {
+            var twit = document.getElementById('tweet-id-'+num);
+            var child1 = get_child(twit, 'twtr-tweet-wrap');
+            var child2 = get_child(child1, 'twtr-tweet-text');
+            var raw_text = collect_text(child2);
+            document.getElementById('main_message_input').value = raw_text;
+            document.getElementById('add_form').submit();
         }
+
+        function get_child(parent, child_class) {
+          for(var i = 0; i < parent.childNodes.length; i++) {
+            var t1_node = parent.childNodes[i];
+            if (t1_node.hasAttribute && t1_node.getAttribute('class') == child_class) {
+              return t1_node;
+            }
+          }
+          return null
+        }
+
+        function collect_text(node) {
+          result = "";
+          for(var i = 0; i < node.childNodes.length; i++) {
+            var node2 = node.childNodes[i];
+            for(var j = 0; j < node2.childNodes.length; j++) {
+              var node3 = node2.childNodes[j];
+              if (node3.nodeType == 3) {
+                result += node3.nodeValue;
+              } else if (node3.nodeName != 'EM') {
+                result += node3.innerText;
+              }
+            }
+          }
+          return result;
+        }
+
         go();
     </script>
 {% else %}

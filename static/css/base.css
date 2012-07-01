@@ -26,10 +26,12 @@ padding:5px;
 
 .add_button {
 	vertical-align: bottom;
+	float:right;
+}
+.bigger_button {
 	padding:8px;
 	margin:10px;
 	font-size: 18pt;
-	float:right;
 }
 .main_message_input {
 	width: 700px;
