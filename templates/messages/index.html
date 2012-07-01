@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <div class='row'>
+                <form class="well form-search">
+                  <textarea type="text" class="main_message_input" rows="3"> </textarea>
+                  <button type="submit" class="btn btn-primary add_button">Add Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% if latest_msgs %}
+    <div class='row-fluid'>
+        <div class="span8">
+            {% for m in latest_msgs %}
+            	<div class='row'>
+            		<div class='span8 message_row'>
+                		<h1 href="/messages/{{ m.id }}/">{{ m.text }}</h1>
+        				<h4> {{m.date_added|date:"D d M Y c"}} </h4>
+            		</div>
+            		<div class='span2'>
+            			<h3>{{m.votes}} vote{{m.votes|pluralize }} </h3>
+            		</div>
+            		<div class='span2'>
+        				<form action="/messages/{{ m.id }}/vote/" method="post">
+        					{% csrf_token %}
+        					<input type="submit" value=" +1 " class='btn btn-primary add_button' />
+        				</form>
+            		</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="span4">
+            <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+            <script float='right'>
+                new TWTR.Widget({
+                  version: 2,
+                  type: 'search',
+                  search: '#happy',
+                  interval: 30000,
+                  title: '#happy Twitter',
+                  subject: 'Any tweets make you happy?',
+                  width: 250,
+                  height: 500,
+                  theme: {
+                    shell: {
+                      background: '#8ec1da',
+                      color: '#ffffff'
+                    },
+                    tweets: {
+                      background: '#ffffff',
+                      color: '#444444',
+                      links: '#1985b5'
+                    }
+                  },
+                  features: {
+                    scrollbar: false,
+                    loop: true,
+                    live: true,
+                    behavior: 'default'
+                  }
+                }).render().start();
+            </script>
+        </div>
+    </div>
+
+    <script>
+        var count = 1;
+        function go() {
+            var twit = document.getElementById('tweet-id-'+count);
+            console.log('going '+'tweet-id-'+count);
+
+            if (twit) {
+                count++
+                import_link = document.createElement('button');
+                import_link.setAttribute('class', 'btn btn-primary  import_button');
+                import_link.setAttribute('onclick','javascript:click_tweet()')
+                newContent = document.createTextNode(" << import this tweet <<");
+                import_link.appendChild(newContent)
+                
+                twit.appendChild(import_link);
+            }
+
+            setTimeout('go()', 1000);
+        }
+        function click_tweet() {
+            alert('go');
+        }
+        go();
+    </script>
+{% else %}
+    <p>No Messages are available.</p>
+{% endif %}
+
+{% endblock %}

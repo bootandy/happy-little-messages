@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ message.text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<h3> has: {{message.votes}} vote{{message.votes|pluralize }} </h3>
+
+<h4> time: {{message.date_added|date:"D d M Y c"}}  </h4>
+
+<form action="/messages/{{ message.id }}/vote/" method="post">
+	{% csrf_token %}
+	<input type="submit" value="+1" />
+</form>
+{% endblock %}

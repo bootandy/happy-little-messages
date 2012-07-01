@@ -1,0 +1,37 @@
+div#top {
+width: auto;
+height: 50px;
+background: transparent url(/static/img/bg-top.png) top left repeat-x;
+color:white;
+text-align: center;
+padding:5px;
+}
+
+.message_row {
+	padding-bottom:20px;
+}
+
+/* ----------- start twitter bar hacking ------------- */
+.twtr-doc{
+	float:right;
+}
+.import_button {
+	margin-right:10px;
+	float:right;
+}
+.twtr-tweet {
+	padding-bottom:40px;
+}
+/* ----------- end twitter bar hacking ------------- */
+
+.add_button {
+	vertical-align: bottom;
+	padding:8px;
+	margin:10px;
+	font-size: 18pt;
+	float:right;
+}
+.main_message_input {
+	width: 700px;
+	font-size: 18pt;
+}

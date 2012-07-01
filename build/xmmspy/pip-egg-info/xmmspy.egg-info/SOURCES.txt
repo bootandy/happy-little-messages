@@ -1,0 +1,6 @@
+xmms-python.cc
+xmmsremote.cc
+pip-egg-info/xmmspy.egg-info/PKG-INFO
+pip-egg-info/xmmspy.egg-info/SOURCES.txt
+pip-egg-info/xmmspy.egg-info/dependency_links.txt
+pip-egg-info/xmmspy.egg-info/top_level.txt

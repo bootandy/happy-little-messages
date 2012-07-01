@@ -1,0 +1,12 @@
+Metadata-Version: 1.0
+Name: xmmspy
+Version: 0.4
+Summary: boost::python wrapper for xmms_remote*
+Home-page: http://dingoskidneys.com/xmmspy/
+Author: Daniel Holth
+Author-email: dholth@fastmail.fm
+License: LGPL
+Description: xmmspy is a wrapper for all but one xmms_remote
+        function. (xmms_remote_playlist).  It's written with boost::python,
+        exposing an included C++ XMMSRemote class to Python.
+Platform: linux
