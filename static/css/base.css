@@ -6,9 +6,20 @@ color:white;
 text-align: center;
 padding:5px;
 }
+h3 {
+	padding:0px;
+	margin:0px;
+	display:inline;
+}
+h1 {
+	display:inline;
+}
 
 .message_row {
 	padding-bottom:20px;
+}
+.vote_margin {
+	margin-bottom: 1px;
 }
 
 /* ----------- start twitter bar hacking ------------- */
@@ -26,14 +37,19 @@ padding:5px;
 
 .add_button {
 	vertical-align: bottom;
+	margin:10px;
+	padding:8px;
+	font-size: 18pt;
 	float:right;
 }
 .bigger_button {
-	padding:8px;
-	margin:10px;
-	font-size: 18pt;
+	padding:5px;
+	font-size: 14pt;
+	margin-right:30px;
+	float:right;
 }
 .main_message_input {
 	width: 700px;
 	font-size: 18pt;
+	font-family: Arial;
 }

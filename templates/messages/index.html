@@ -7,7 +7,7 @@
                 <form class="well form-search" action='add/' method='POST' id='add_form'>
                   {% csrf_token %}
                   <textarea type="text" name="main_message_input" id="main_message_input" class="main_message_input" rows="3"> </textarea>
-                  <button type="submit" class="btn btn-primary add_button bigger_button">Add Message</button>
+                  <button type="submit" class="btn btn-primary add_button">Add Message</button>
                 </form>
             </div>
         </div>
@@ -18,20 +18,26 @@
         <div class="span9">
             {% for m in latest_msgs %}
             	<div class='row'>
-            		<div class='span8 message_row'>
-                		<h2 href="/messages/{{ m.id }}/">{{ m.text }}</h2>
-        				<h4> {{m.date_added|date:"D d M Y c"}} </h4>
+            		<div class='span9 message_row'>
+               		<h2 href="/messages/{{ m.id }}/">{{ m.text }}</h2>
+          				<h4> {{m.date_added|date:"D d M Y c"}} </h4>
             		</div>
-            		<div class='span2'>
-            			<h3>{{m.votes}} vote{{m.votes|pluralize }} </h3>
-            		</div>
-            		<div class='span2'>
-        				<form action="/messages/{{ m.id }}/vote/" method="post">
-        					{% csrf_token %}
-        					<input type="submit" value=" +1 " class='btn btn-primary bigger_button' />
-        				</form>
-            		</div>
+                <div class='span3'>
+                  <form action="/messages/{{ m.id }}/vote/" method="post" class='vote_margin'>
+                    {% csrf_token %}
+                    <h3>{{m.votes}} vote{{m.votes|pluralize }} 
+                    </h3>
+                    <input type="submit" value=" +1 " class='btn btn-primary bigger_button' />
+                  </form>
+                  <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="{{m.text}}">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                 </div>
+<!--             		<div class='span3'>
+                  <a name="fb_share">Facebook Share</a> 
+                  <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript">
+                  </script>
+            		</div>
+ -->              </div>
             {% endfor %}
         </div>
         <div class="span3">
@@ -70,7 +76,7 @@
 
     <script>
         var count = 1;
-        function go() {
+        function check_for_tweets_append_button() {
             var twit = document.getElementById('tweet-id-'+count);
             console.log('going '+'tweet-id-'+count);
 
@@ -84,15 +90,15 @@
                 count++
             }
 
-            setTimeout('go()', 1000);
+            setTimeout('check_for_tweets_append_button()', 1000);
         }
         function click_tweet(num) {
             var twit = document.getElementById('tweet-id-'+num);
             var child1 = get_child(twit, 'twtr-tweet-wrap');
             var child2 = get_child(child1, 'twtr-tweet-text');
             var raw_text = collect_text(child2);
-            document.getElementById('main_message_input').value = raw_text;
-            document.getElementById('add_form').submit();
+            document.getElementById('main_message_input').value = $.trim(raw_text);
+            //document.getElementById('add_form').submit();
         }
 
         function get_child(parent, child_class) {
@@ -121,7 +127,7 @@
           return result;
         }
 
-        go();
+        check_for_tweets_append_button();
     </script>
 {% else %}
     <p>No Messages are available.</p>
