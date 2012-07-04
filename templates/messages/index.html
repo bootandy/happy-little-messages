@@ -29,7 +29,7 @@
                     </h3>
                     <input type="submit" value=" +1 " class='btn btn-primary bigger_button' />
                   </form>
-                  <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="{{m.text}}">Tweet</a>
+                  <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="@H_L_M_ {{m.text}}">Tweet</a>
                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                 </div>
 <!--             		<div class='span3'>
@@ -125,6 +125,43 @@
             }
           }
           return result;
+        }
+
+        var doc = document.documentElement;
+        var body = document.body;
+
+
+        function scrolled_to_bottom() {
+          var totalHeight, currentScroll, visibleHeight;
+          
+          if (doc.scrollTop) { 
+            currentScroll = doc.scrollTop; 
+          } else { 
+            currentScroll = body.scrollTop; 
+          }
+          
+          totalHeight = body.offsetHeight;
+          visibleHeight = doc.clientHeight;
+          
+          if (totalHeight <= currentScroll + visibleHeight ) {
+            return true
+          }
+          return false
+        }
+
+        window.scrollTo(0, {{scroll_top}})
+
+        // If we were already scrolled to the bottom - we would enter permenant refresh
+        if (!scrolled_to_bottom()) {
+          // Periodically check to see if window has scrolled to bottom
+          var refresh_id = setInterval(function(){         
+            console.log('check for bottom')
+            if (scrolled_to_bottom()) {
+              // Get how far down the window has been scrolled
+              var scroll_top = (doc && doc.scrollTop  || body && body.scrollTop  || 0);
+              window.location='?pages={{page_to_load}}&scroll_top='+scroll_top
+            }
+          }, 500);
         }
 
         check_for_tweets_append_button();

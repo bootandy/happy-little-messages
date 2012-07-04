@@ -6,11 +6,18 @@ from messages.models import Message
 from django.http import Http404
 from django.template import RequestContext
 
+NUM_MSGS_TO_LOAD = 10
 
 def index(request):
-    latest_msgs = Message.objects.all().order_by('-votes')[:5]
-    return render_to_response('messages/index.html', 
-        {'latest_msgs': latest_msgs}, 
+    page_to_load = int(request.GET.get('pages', 0))
+    scroll_top = int(request.GET.get('scroll_top', 0))
+
+    latest_msgs = Message.objects.all().order_by('-votes')[:(page_to_load+NUM_MSGS_TO_LOAD)]
+    return render_to_response('messages/index.html',  {
+        'latest_msgs':latest_msgs, 
+        'page_to_load':(page_to_load+NUM_MSGS_TO_LOAD),
+        'scroll_top':scroll_top
+        }, 
         context_instance=RequestContext(request))
 
 def load(request):
