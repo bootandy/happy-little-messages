@@ -20,14 +20,18 @@
             	<div class='row'>
             		<div class='span9 message_row'>
                		<h2 href="/messages/{{ m.id }}/">{{ m.text }}</h2>
-          				<h4> {{m.date_added|date:"D d M Y c"}} </h4>
+          				<h4> {{m.date_added|date:"D d M Y H:i:s"}} </h4>
             		</div>
                 <div class='span3'>
                   <form action="/messages/{{ m.id }}/vote/" method="post" class='vote_margin'>
                     {% csrf_token %}
                     <h3>{{m.votes}} vote{{m.votes|pluralize }} 
                     </h3>
-                    <input type="submit" value=" +1 " class='btn btn-primary bigger_button' />
+                    {% if m.id in votes %}
+                      <br/><i>thanks for voting</i>
+                    {% else %}
+                      <input type="submit" value=" +1 " class='btn btn-primary bigger_button' />
+                    {% endif %}
                   </form>
                   <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="@H_L_M_ {{m.text}}">Tweet</a>
                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -74,11 +78,19 @@
         </div>
     </div>
 
+{% else %}
+    <p>No Messages are available.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block js %}
     <script>
+        // Add our import button
         var count = 1;
         function check_for_tweets_append_button() {
             var twit = document.getElementById('tweet-id-'+count);
-            console.log('going '+'tweet-id-'+count);
+            //console.log('checking for '+'tweet-id-'+count);
 
             if (twit) {
                 import_link = document.createElement('button');
@@ -90,15 +102,16 @@
                 count++
             }
 
-            setTimeout('check_for_tweets_append_button()', 1000);
+            setTimeout('check_for_tweets_append_button()', 2000);
         }
+
+        // To import the tweet to our system
         function click_tweet(num) {
             var twit = document.getElementById('tweet-id-'+num);
             var child1 = get_child(twit, 'twtr-tweet-wrap');
             var child2 = get_child(child1, 'twtr-tweet-text');
             var raw_text = collect_text(child2);
             document.getElementById('main_message_input').value = $.trim(raw_text);
-            //document.getElementById('add_form').submit();
         }
 
         function get_child(parent, child_class) {
@@ -130,7 +143,7 @@
         var doc = document.documentElement;
         var body = document.body;
 
-
+        // Scroll to where we were on the page before the page refresh
         function scrolled_to_bottom() {
           var totalHeight, currentScroll, visibleHeight;
           
@@ -166,8 +179,5 @@
 
         check_for_tweets_append_button();
     </script>
-{% else %}
-    <p>No Messages are available.</p>
-{% endif %}
 
 {% endblock %}

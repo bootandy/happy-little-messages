@@ -1,7 +1,7 @@
 div#top {
 width: auto;
-height: 50px;
-background: transparent url(/static/img/bg-top.png) top left repeat-x;
+height: 70px;
+background: transparent url(/static/img/top-big.png) top left repeat-x;
 color:white;
 text-align: center;
 padding:5px;
@@ -12,6 +12,7 @@ h3 {
 	display:inline;
 }
 h1 {
+	font-size: 72pt;
 	display:inline;
 }
 
