@@ -13,3 +13,6 @@ python manage.py syncdb
 
 start django:
 python manage.py runserver 
+
+How2 login to AWS:
+ssh ubuntu@ec2-23-22-238-109.compute-1.amazonaws.com -i key_file.pem 
