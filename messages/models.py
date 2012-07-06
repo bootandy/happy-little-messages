@@ -6,7 +6,7 @@ class Message(models.Model):
     votes = models.IntegerField()
     date_added = models.DateTimeField(default=datetime.now)
     score = models.BigIntegerField()
-    next_vote = models.IntegerField(default=60000)
+    next_vote = models.IntegerField(default=3600) # 86400 seconds in a day
 
     def __unicode__(self):
         return self.text + ' : '+ str(self.votes) + ' : '+str(self.date_added) + ' : ' + str(self.score) + ' : '+str(self.next_vote) + '\n'

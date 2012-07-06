@@ -39,7 +39,8 @@ def vote(request, m_id):
     try:
         p.votes += 1
         p.score += p.next_vote
-        p.next_vote = int(p.next_vote * 2 / 3)
+        #p.next_vote = int(p.next_vote * 2 / 3)
+        p.next_vote = max(p.next_vote - 10, 10)
         p.save()
 
     except (KeyError):
