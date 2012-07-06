@@ -17,11 +17,10 @@ start django:
 python manage.py runserver 
 
 How2 login to AWS:
-ssh ubuntu@ec2-23-22-238-109.compute-1.amazonaws.com -i key_file.pem 
-
-#Followed these instructions for mod_wsgi / apache integration:
-#http://www.lennu.net/2012/05/14/django-deployement-installation-to-ubuntu-12-dot-04-server/
+ssh bitnami@54.247.113.119 -i andy2.pem 
 
 # Using this stack on AWS:
 http://bitnami.org/stack/djangostack#cloudImage
 
+# restart Apache:
+sudo ./ctlscript.sh restart apache
