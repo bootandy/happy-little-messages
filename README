@@ -3,6 +3,8 @@ simple django app
 libraries to install:
 sudo apt-get install  python-dev
 sudo apt-get install  libpq-dev
+sudo apt-get install  python-pip
+sudo apt-get install  git
 
 setup DB here with db name=django_db
 http://blog.iiilx.com/programming/how-to-install-postgres-on-ubuntu-for-django/
@@ -16,3 +18,10 @@ python manage.py runserver
 
 How2 login to AWS:
 ssh ubuntu@ec2-23-22-238-109.compute-1.amazonaws.com -i key_file.pem 
+
+#Followed these instructions for mod_wsgi / apache integration:
+#http://www.lennu.net/2012/05/14/django-deployement-installation-to-ubuntu-12-dot-04-server/
+
+# Using this stack on AWS:
+http://bitnami.org/stack/djangostack#cloudImage
+

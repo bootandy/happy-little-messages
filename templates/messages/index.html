@@ -18,18 +18,20 @@
     <div class='row-fluid'>
         <div class="span9">
             {% for m in latest_msgs %}
-            	<div class='row'>
+            	<div class='row padded_row'>
+                
             		<div class='span9 message_row'>
                		<h2 href="/messages/{{ m.id }}/">{{ m.text }}</h2>
           				<h4> {{m.date_added|date:"D d M Y H:i:s"}} </h4>
             		</div>
                 <div class='span3'>
-                  <form action="/messages/{{ m.id }}/vote/" method="post" class='vote_margin'>
+                  <form action="/{{ m.id }}/vote/" method="post" class='vote_margin'>
                     {% csrf_token %}
                     <h3>{{m.votes}} vote{{m.votes|pluralize }} 
                     </h3>
                     {% if m.id in votes %}
-                      <br/><i>thanks for voting</i>
+                      <input type="submit" value=" +1 " class='btn btn-primary bigger_button' disabled='true'/>
+                      <br/><i>thank you</i>
                     {% else %}
                       <input type="submit" value=" +1 " class='btn btn-primary bigger_button' 
                       onclick="_gaq.push(['_trackEvent', 'vote_button', 'clicked'])" />
@@ -44,6 +46,7 @@
                   </script>
             		</div>
  -->              </div>
+
             {% endfor %}
         </div>
         <div class="span3">

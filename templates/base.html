@@ -36,8 +36,18 @@
       </div>
 	  </div>
 	 
+    {% if notification %}
+      <div class="alert alert-success" style='position:absolute; top:70px; right:500px; z-index:1000; width:300px;'>
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        <h4 class="alert-heading">Thanks!</h4>
+        {{notification}}
+      </div>
+    {% endif %}
+
     <div class="container">
-        <h2 id='sub_header'>things that make you happy </h2>
+        <div class='span12'>
+          <h2 id='sub_header'>things that make you happy </h2>
+        </div>
         {% block content %}{% endblock %}
     </div>
 

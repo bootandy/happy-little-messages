@@ -6,13 +6,15 @@ from messages.models import Message
 from django.http import Http404
 from django.template import RequestContext
 
+import urllib
 import time
 
-NUM_MSGS_TO_LOAD = 10
+NUM_MSGS_TO_LOAD = 25
 
 def index(request):
     page_to_load = int(request.GET.get('pages', 0))
     scroll_top = int(request.GET.get('scroll_top', 0))
+    notification = urllib.unquote(request.GET.get('notification',''))
 
     latest_msgs = Message.objects.all().order_by('-score')[:(page_to_load+NUM_MSGS_TO_LOAD)]
 
@@ -25,6 +27,7 @@ def index(request):
         'page_to_load':(page_to_load+NUM_MSGS_TO_LOAD),
         'scroll_top':scroll_top,
         'votes': vote_list,
+        'notification':notification
         }, 
         context_instance=RequestContext(request))
 
@@ -32,7 +35,8 @@ def add(request):
     text = request.REQUEST['main_message_input']
     m = Message(text=text, votes=0, score=time.mktime(time.gmtime()))
     m.save()
-    return HttpResponseRedirect(reverse('messages.views.index'))
+    #return HttpResponseRedirect(reverse('messages.views.index'))
+    return HttpResponseRedirect('/?notification='+urllib.quote('you added: '+m.text))
 
 def vote(request, m_id):
     p = get_object_or_404(Message, pk=m_id)
@@ -50,10 +54,9 @@ def vote(request, m_id):
             'error_message': "Error saving!",
         }, context_instance=RequestContext(request))
     else:
-        res = HttpResponseRedirect(reverse('messages.views.index'))
+        res = HttpResponseRedirect('/?notification='+urllib.quote('you voted for: '+p.text) )
 
         votes = request.COOKIES.get('voted_for','') + ',' + str(p.id)
         res.set_cookie('voted_for', votes)
-        print votes
         return res
 

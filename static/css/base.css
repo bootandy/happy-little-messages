@@ -11,13 +11,22 @@ h3 {
 	margin:0px;
 	display:inline;
 }
+h2{
+	display:inline;	
+}
 h1 {
 	font-size: 52pt;
 	display:inline;
 }
 
-.message_row {
-	padding-bottom:20px;
+
+.padded_row {
+	border-style:solid;
+	border-color:#CCCCCC;
+	border-width:0px;
+	border-bottom-width:1px;
+	padding-bottom:10px;
+	padding-top:10px;
 }
 .vote_margin {
 	margin-bottom: 1px;
