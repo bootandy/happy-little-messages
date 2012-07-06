@@ -1,5 +1,15 @@
 simple django app
 
-to install:
+libraries to install:
 sudo apt-get install  python-dev
 sudo apt-get install  libpq-dev
+
+setup DB here with db name=django_db
+http://blog.iiilx.com/programming/how-to-install-postgres-on-ubuntu-for-django/
+Note: pg_hba.conf is here: not 1 level higher like the blogpost: /etc/postgresql/9.1/main/pg_hba.conf
+
+init db:
+python manage.py syncdb
+
+start django:
+python manage.py runserver 

@@ -7,7 +7,8 @@
                 <form class="well form-search" action='add/' method='POST' id='add_form'>
                   {% csrf_token %}
                   <textarea type="text" name="main_message_input" id="main_message_input" class="main_message_input" rows="3"> </textarea>
-                  <button type="submit" class="btn btn-primary add_button">Add Message</button>
+                  <button type="submit" class="btn btn-primary add_button" 
+                  onclick="_gaq.push(['_trackEvent', 'add_button', 'clicked'])">Add Message</button>
                 </form>
             </div>
         </div>
@@ -30,7 +31,8 @@
                     {% if m.id in votes %}
                       <br/><i>thanks for voting</i>
                     {% else %}
-                      <input type="submit" value=" +1 " class='btn btn-primary bigger_button' />
+                      <input type="submit" value=" +1 " class='btn btn-primary bigger_button' 
+                      onclick="_gaq.push(['_trackEvent', 'vote_button', 'clicked'])" />
                     {% endif %}
                   </form>
                   <a href="https://twitter.com/share" class="twitter-share-button" data-lang="en" data-text="@H_L_M_ {{m.text}}">Tweet</a>
