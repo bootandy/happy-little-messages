@@ -21,18 +21,21 @@ def index(request):
     votes = request.COOKIES.get('voted_for','').split(',')
     votes = filter(None, votes)
     vote_list = map(lambda a: int(a), votes);
-    
+
     return render_to_response('messages/index.html',  {
-        'latest_msgs':latest_msgs, 
+        'latest_msgs':latest_msgs,
         'page_to_load':(page_to_load+NUM_MSGS_TO_LOAD),
         'scroll_top':scroll_top,
         'votes': vote_list,
         'notification':notification
-        }, 
+        },
         context_instance=RequestContext(request))
 
 def add(request):
     text = request.REQUEST['main_message_input']
+    if '<a' in text:
+        return HttpResponseRedirect('/?notification='+urllib.quote('No <a href=> links please. You might be a spam bot'))
+
     m = Message(text=text, votes=0, score=time.mktime(time.gmtime()))
     m.save()
     #return HttpResponseRedirect(reverse('messages.views.index'))
